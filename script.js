@@ -294,7 +294,7 @@ window.addEventListener('load', createParticles);
    10. MOBILE CAROUSEL NAVIGATION (Arrows)
    ======================================================================== */
 function initCarousels() {
-  const grids = document.querySelectorAll('.services-grid');
+  const grids = document.querySelectorAll('.services-grid, .values-grid');
   grids.forEach(grid => {
     const parent = grid.parentElement;
     const prevBtn = parent.querySelector('.carousel-nav-btn.prev');
@@ -303,14 +303,14 @@ function initCarousels() {
     if (!prevBtn || !nextBtn) return;
 
     nextBtn.addEventListener('click', () => {
-      const card = grid.querySelector('.service-card');
+      const card = grid.querySelector('.service-card, .value-card');
       if (!card) return;
       const scrollAmount = card.offsetWidth + 16; // Card width + gap
       grid.scrollBy({ left: scrollAmount, behavior: 'smooth' });
     });
 
     prevBtn.addEventListener('click', () => {
-      const card = grid.querySelector('.service-card');
+      const card = grid.querySelector('.service-card, .value-card');
       if (!card) return;
       const scrollAmount = card.offsetWidth + 16; // Card width + gap
       grid.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
