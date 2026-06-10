@@ -312,6 +312,8 @@ p {
   align-items: center;
   justify-content: space-between;
   height: 100%;
+  max-width: 100%;
+  padding: 0 var(--space-4);
 }
 
 .nav-logo {
@@ -321,7 +323,7 @@ p {
 }
 
 .nav-logo img {
-  height: 72px;
+  height: 60px;
   width: auto;
   transition: height var(--transition-base);
 }
