@@ -2148,14 +2148,18 @@ select.form-control {
   .split-section.reverse { direction: ltr; }
   .split-image { min-height: 300px; }
 
-  .products-grid { grid-template-columns: 1fr; }
   .carousel-container {
     position: relative;
     margin: 0 calc(-1 * var(--space-6));
     width: auto;
   }
 
-  .services-grid {
+  .services-grid,
+  .values-grid,
+  .product-features-grid,
+  .products-grid,
+  .industries-grid,
+  .application-grid {
     display: flex !important;
     flex-wrap: nowrap;
     overflow-x: auto;
@@ -2167,11 +2171,21 @@ select.form-control {
     margin: 0;
   }
 
-  .services-grid::-webkit-scrollbar {
+  .services-grid::-webkit-scrollbar,
+  .values-grid::-webkit-scrollbar,
+  .product-features-grid::-webkit-scrollbar,
+  .products-grid::-webkit-scrollbar,
+  .industries-grid::-webkit-scrollbar,
+  .application-grid::-webkit-scrollbar {
     display: none;
   }
 
-  .services-grid .service-card {
+  .services-grid .service-card,
+  .values-grid .value-card,
+  .product-features-grid .product-feature-card,
+  .products-grid .product-card,
+  .industries-grid .industry-card,
+  .application-grid .application-item {
     flex: 0 0 82%;
     scroll-snap-align: center;
     margin-bottom: 0;
@@ -2221,50 +2235,7 @@ select.form-control {
     background: var(--white);
     transform: translateY(-50%) scale(0.9);
   }
-  .industries-grid { grid-template-columns: repeat(2, 1fr); }
-  .values-grid {
-    display: flex !important;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-    gap: var(--space-4);
-    padding: var(--space-2) var(--space-6) var(--space-6);
-    margin: 0;
-  }
 
-  .values-grid::-webkit-scrollbar {
-    display: none;
-  }
-
-  .values-grid .value-card {
-    flex: 0 0 82%;
-    scroll-snap-align: center;
-    margin-bottom: 0;
-  }
-  .application-grid { grid-template-columns: 1fr; }
-  .product-features-grid {
-    display: flex !important;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-    gap: var(--space-4);
-    padding: var(--space-2) var(--space-6) var(--space-6);
-    margin: 0;
-  }
-
-  .product-features-grid::-webkit-scrollbar {
-    display: none;
-  }
-
-  .product-features-grid .product-feature-card {
-    flex: 0 0 82%;
-    scroll-snap-align: center;
-    margin-bottom: 0;
-  }
 
   .footer-grid { grid-template-columns: 1fr 1fr; gap: var(--space-8); }
   .footer-newsletter { padding-left: 0; border-left: none; border-top: 1px solid rgba(255,255,255,0.06); padding-top: var(--space-6); grid-column: 1 / -1; }
