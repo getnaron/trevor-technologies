@@ -52,12 +52,14 @@ function initMobileMenu() {
   const toggle = document.querySelector('.mobile-toggle');
   const navLinks = document.querySelector('.nav-links');
   const overlay = document.querySelector('.mobile-overlay');
+  const navbar = document.querySelector('.navbar');
 
   if (!toggle || !navLinks) return;
 
   toggle.addEventListener('click', () => {
     toggle.classList.toggle('active');
     navLinks.classList.toggle('active');
+    if (navbar) navbar.classList.toggle('menu-open');
     if (overlay) overlay.classList.toggle('active');
     document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
   });
@@ -66,6 +68,7 @@ function initMobileMenu() {
     overlay.addEventListener('click', () => {
       toggle.classList.remove('active');
       navLinks.classList.remove('active');
+      if (navbar) navbar.classList.remove('menu-open');
       overlay.classList.remove('active');
       document.body.style.overflow = '';
     });
@@ -77,6 +80,7 @@ function initMobileMenu() {
       if (window.innerWidth <= 768) {
         toggle.classList.remove('active');
         navLinks.classList.remove('active');
+        if (navbar) navbar.classList.remove('menu-open');
         if (overlay) overlay.classList.remove('active');
         document.body.style.overflow = '';
       }
