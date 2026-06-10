@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initSmoothScroll();
   initDropdowns();
   initContactForm();
+  initCarousels();
 });
 
 /* ========================================================================
@@ -288,3 +289,31 @@ function createParticles() {
 
 // Init particles when page loads
 window.addEventListener('load', createParticles);
+
+/* ========================================================================
+   10. MOBILE CAROUSEL NAVIGATION (Arrows)
+   ======================================================================== */
+function initCarousels() {
+  const grids = document.querySelectorAll('.services-grid');
+  grids.forEach(grid => {
+    const parent = grid.parentElement;
+    const prevBtn = parent.querySelector('.carousel-nav-btn.prev');
+    const nextBtn = parent.querySelector('.carousel-nav-btn.next');
+
+    if (!prevBtn || !nextBtn) return;
+
+    nextBtn.addEventListener('click', () => {
+      const card = grid.querySelector('.service-card');
+      if (!card) return;
+      const scrollAmount = card.offsetWidth + 16; // Card width + gap
+      grid.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    });
+
+    prevBtn.addEventListener('click', () => {
+      const card = grid.querySelector('.service-card');
+      if (!card) return;
+      const scrollAmount = card.offsetWidth + 16; // Card width + gap
+      grid.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+    });
+  });
+}
