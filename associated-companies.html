@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Trevor Technologies WLL — Our associated companies spanning Saudi Arabia, UAE, and international markets in power infrastructure solutions.">
+  <meta name="keywords" content="Trevor Technologies associated companies, IDS Saudi Arabia, Winmet UAE, Powerline Solutions, power infrastructure partners">
+  <title>Associated Companies — Trevor Technologies WLL</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="assets/trevor-logo.png">
+  <style>
+    /* ── Associated Companies Page Styles ── */
+    .assoc-section {
+      padding: var(--space-24) 0;
+      background: var(--gray-50);
+      min-height: 60vh;
+    }
+
+    .assoc-intro {
+      max-width: 660px;
+      margin: 0 auto var(--space-16) auto;
+      text-align: center;
+    }
+
+    .assoc-intro p {
+      font-size: var(--text-lg);
+      color: var(--gray-500);
+      line-height: 1.8;
+      margin: 0;
+    }
+
+    /* ── Company Cards Grid ── */
+    .companies-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-8);
+    }
+
+    @media (max-width: 1024px) {
+      .companies-grid-wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scroll-snap-type: x mandatory;
+        padding-bottom: var(--space-4);
+        margin: 0 calc(-1 * var(--space-6));
+        padding-left: var(--space-6);
+        padding-right: var(--space-6);
+        /* hide scrollbar but keep functionality */
+        scrollbar-width: thin;
+        scrollbar-color: var(--gray-300) transparent;
+      }
+      .companies-grid-wrapper::-webkit-scrollbar {
+        height: 4px;
+      }
+      .companies-grid-wrapper::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .companies-grid-wrapper::-webkit-scrollbar-thumb {
+        background: var(--gray-300);
+        border-radius: 2px;
+      }
+      .companies-grid {
+        grid-template-columns: repeat(3, minmax(300px, 1fr));
+        width: max-content;
+        min-width: 100%;
+      }
+      .company-card {
+        scroll-snap-align: start;
+        width: 300px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .company-card {
+        width: 82vw;
+      }
+    }
+
+
+    .company-card {
+      background: var(--white);
+      border-radius: var(--radius-2xl);
+      border: 1px solid var(--gray-100);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+      transition: all var(--transition-base);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .company-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-card-hover);
+      border-color: rgba(0, 85, 165, 0.15);
+    }
+
+    .company-card-header {
+      position: relative;
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .company-card:nth-child(1) .company-card-header {
+      background: linear-gradient(135deg, #002B57 0%, #0055A5 60%, #00B4D8 100%);
+    }
+    .company-card:nth-child(2) .company-card-header {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%);
+    }
+    .company-card:nth-child(3) .company-card-header {
+      background: linear-gradient(135deg, #003D2E 0%, #006B4F 60%, #00A87A 100%);
+    }
+
+    .company-card-header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+
+    .company-icon-wrap {
+      position: relative;
+      z-index: 2;
+      width: 80px;
+      height: 80px;
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: var(--radius-xl);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.4rem;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+    }
+
+    .company-card-badge {
+      position: absolute;
+      top: var(--space-4);
+      right: var(--space-4);
+      z-index: 3;
+      padding: var(--space-1) var(--space-3);
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: var(--radius-full);
+      font-size: var(--text-xs);
+      font-weight: 600;
+      color: rgba(255,255,255,0.9);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      backdrop-filter: blur(8px);
+    }
+
+    .company-card-body {
+      padding: var(--space-8);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+
+    .company-name {
+      font-family: var(--font-heading);
+      font-size: var(--text-2xl);
+      font-weight: 800;
+      color: var(--gray-900);
+      margin: 0;
+      line-height: 1.2;
+    }
+
+    .company-url {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: var(--text-sm);
+      color: var(--trevor-blue);
+      font-weight: 500;
+    }
+
+    .company-url svg {
+      flex-shrink: 0;
+    }
+
+    .company-desc {
+      font-size: var(--text-sm);
+      color: var(--gray-500);
+      line-height: 1.7;
+      flex: 1;
+      margin: 0;
+    }
+
+    .company-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+      margin-top: auto;
+    }
+
+    .company-tag {
+      padding: var(--space-1) var(--space-3);
+      background: var(--trevor-blue-pale);
+      border-radius: var(--radius-full);
+      font-size: var(--text-xs);
+      font-weight: 600;
+      color: var(--trevor-blue);
+      white-space: nowrap;
+    }
+
+    .company-card-footer {
+      padding: 0 var(--space-8) var(--space-8);
+    }
+
+    .company-visit-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      width: 100%;
+      padding: 14px 0;
+      border-radius: var(--radius-full);
+      font-size: var(--text-sm);
+      font-weight: 600;
+      transition: all var(--transition-base);
+      border: 2px solid rgba(0,85,165,0.15);
+      background: var(--white);
+      color: var(--trevor-blue);
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .company-visit-btn:hover {
+      background: var(--gradient-blue);
+      color: var(--white);
+      border-color: transparent;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0,85,165,0.3);
+    }
+
+    .company-visit-btn .btn-arrow {
+      transition: transform var(--transition-fast);
+    }
+
+    .company-visit-btn:hover .btn-arrow {
+      transform: translateX(4px);
+    }
+
+    /* ── Network Banner ── */
+    .network-banner {
+      background: var(--gradient-blue);
+      padding: var(--space-16) 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .network-banner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    .network-banner .container {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-8);
+      flex-wrap: wrap;
+    }
+
+    .network-banner-text h2 {
+      font-size: var(--text-3xl);
+      font-weight: 800;
+      color: var(--white);
+      margin-bottom: var(--space-2);
+    }
+
+    .network-banner-text p {
+      font-size: var(--text-base);
+      color: rgba(255,255,255,0.7);
+      margin: 0;
+    }
+
+    .network-stats {
+      display: flex;
+      gap: var(--space-12);
+    }
+
+    .network-stat {
+      text-align: center;
+    }
+
+    .network-stat-num {
+      font-family: var(--font-heading);
+      font-size: var(--text-4xl);
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1;
+    }
+
+    .network-stat-label {
+      font-size: var(--text-sm);
+      color: rgba(255,255,255,0.6);
+      margin-top: var(--space-1);
+    }
+
+    @media (max-width: 768px) {
+      .network-banner .container {
+        flex-direction: column;
+        text-align: center;
+      }
+      .network-stats {
+        gap: var(--space-8);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <a href="index.html" class="nav-logo">
+        <img src="assets/trevor-logo.png" alt="Trevor Technologies">
+      </a>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="about.html" class="nav-link">About</a>
+        <div class="nav-dropdown">
+          <a href="products.html" class="nav-link dropdown-trigger">Products <span class="chevron">▼</span></a>
+          <div class="dropdown-menu">
+            <a href="rectifiers.html" class="dropdown-item">
+              <div class="dd-icon">⚡</div>
+              <div class="dd-text">
+                <span class="dd-title">Rectifiers &amp; Chargers</span>
+                <span class="dd-desc">DC UPS Systems</span>
+              </div>
+            </a>
+            <a href="ac-ups.html" class="dropdown-item">
+              <div class="dd-icon">🔌</div>
+              <div class="dd-text">
+                <span class="dd-title">AC UPS &amp; Inverters</span>
+                <span class="dd-desc">Uninterruptible Power</span>
+              </div>
+            </a>
+            <a href="batteries.html" class="dropdown-item">
+              <div class="dd-icon">🔋</div>
+              <div class="dd-text">
+                <span class="dd-title">Battery Systems</span>
+                <span class="dd-desc">Stationary &amp; Monitoring</span>
+              </div>
+            </a>
+            <a href="dc-converters.html" class="dropdown-item">
+              <div class="dd-icon">🔄</div>
+              <div class="dd-text">
+                <span class="dd-title">DC-DC Converters</span>
+                <span class="dd-desc">Power Conversion</span>
+              </div>
+            </a>
+            <a href="solar.html" class="dropdown-item">
+              <div class="dd-icon">☀️</div>
+              <div class="dd-text">
+                <span class="dd-title">Solar Systems</span>
+                <span class="dd-desc">Renewable Energy</span>
+              </div>
+            </a>
+            <a href="containerized.html" class="dropdown-item">
+              <div class="dd-icon">📦</div>
+              <div class="dd-text">
+                <span class="dd-title">Containerized Solutions</span>
+                <span class="dd-desc">Mobile Power Backup</span>
+              </div>
+            </a>
+          </div>
+        </div>
+        <a href="services.html" class="nav-link">Services</a>
+        <a href="industries.html" class="nav-link">Industries</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+        <div class="nav-dropdown">
+          <a href="associated-companies.html" class="nav-link dropdown-trigger active">Associated Companies <span class="chevron">▼</span></a>
+          <div class="dropdown-menu">
+            <a href="https://ids.com.sa/" class="dropdown-item" target="_blank" rel="noopener">
+              <div class="dd-icon">🏢</div>
+              <div class="dd-text">
+                <span class="dd-title">IDS</span>
+                <span class="dd-desc">ids.com.sa</span>
+              </div>
+            </a>
+            <a href="https://winmetua.com/index.html" class="dropdown-item" target="_blank" rel="noopener">
+              <div class="dd-icon">🌐</div>
+              <div class="dd-text">
+                <span class="dd-title">Winmet</span>
+                <span class="dd-desc">winmetua.com</span>
+              </div>
+            </a>
+            <a href="https://www.powerlinesolutions.com/" class="dropdown-item" target="_blank" rel="noopener">
+              <div class="dd-icon">⚡</div>
+              <div class="dd-text">
+                <span class="dd-title">Powerline Solutions</span>
+                <span class="dd-desc">powerlinesolutions.com</span>
+              </div>
+            </a>
+          </div>
+        </div>
+        <div class="nav-cta">
+          <a href="contact.html" class="btn btn-primary btn-sm">Request a Quote <span class="btn-icon">→</span></a>
+        </div>
+      </div>
+      <div class="mobile-toggle" id="mobileToggle">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+  <div class="mobile-overlay" id="mobileOverlay"></div>
+
+  <!-- ====== PAGE HERO ====== -->
+  <section class="page-hero">
+    <div class="container">
+      <div class="page-hero-content">
+        <div class="breadcrumb">
+          <a href="index.html">Home</a>
+          <span class="separator">›</span>
+          <span>Associated Companies</span>
+        </div>
+        <h1 class="page-hero-title">Our Associated <span style="background: linear-gradient(135deg, #7DD3FC, #00B4D8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Companies</span></h1>
+        <p class="page-hero-subtitle">A global network of trusted partners delivering power solutions across the Middle East and beyond.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== NETWORK BANNER ====== -->
+
+
+  <!-- ====== COMPANIES GRID ====== -->
+  <section class="assoc-section">
+    <div class="container">
+      <div class="assoc-intro animate-on-scroll">
+        <div class="section-label">Our Network</div>
+        <h2 class="section-title">Companies <span>Associated</span> with Trevor</h2>
+        <p>Trevor Technologies WLL is proud to be partnered with industry-leading organizations across the region. Click on any company below to visit their website and explore their expertise.</p>
+      </div>
+
+      <div class="companies-grid-wrapper">
+      <div class="companies-grid">
+
+        <!-- IDS Saudi Arabia -->
+        <div class="company-card animate-on-scroll delay-1">
+          <div class="company-card-header">
+            <span class="company-card-badge">IDS</span>
+            <div class="company-icon-wrap">🏢</div>
+          </div>
+          <div class="company-card-body">
+            <h2 class="company-name">IDS</h2>
+            <a href="https://ids.com.sa/" class="company-url" target="_blank" rel="noopener">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              ids.com.sa
+            </a>
+            <p class="company-desc">A leading power infrastructure company based in Saudi Arabia, delivering advanced electrical and power solutions across the Kingdom and the broader Gulf region. Known for engineering excellence and reliable project execution.</p>
+            <div class="company-tags">
+              <span class="company-tag">Power Infrastructure</span>
+              <span class="company-tag">Engineering</span>
+            </div>
+          </div>
+          <div class="company-card-footer">
+            <a href="https://ids.com.sa/" class="company-visit-btn" target="_blank" rel="noopener">
+              Visit IDS Website <span class="btn-arrow">→</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Winmet UAE -->
+        <div class="company-card animate-on-scroll delay-2">
+          <div class="company-card-header">
+            <span class="company-card-badge">Winmet</span>
+            <div class="company-icon-wrap">🌐</div>
+          </div>
+          <div class="company-card-body">
+            <h2 class="company-name">Winmet</h2>
+            <a href="https://winmetua.com/index.html" class="company-url" target="_blank" rel="noopener">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              winmetua.com
+            </a>
+            <p class="company-desc">An established company in the UAE offering comprehensive industrial and commercial solutions. Winmet brings regional expertise in trade, distribution, and technical services to support a diverse client base across the Emirates.</p>
+            <div class="company-tags">
+              <span class="company-tag">Industrial Solutions</span>
+              <span class="company-tag">Distribution</span>
+            </div>
+          </div>
+          <div class="company-card-footer">
+            <a href="https://winmetua.com/index.html" class="company-visit-btn" target="_blank" rel="noopener">
+              Visit Winmet Website <span class="btn-arrow">→</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Powerline Solutions -->
+        <div class="company-card animate-on-scroll delay-3">
+          <div class="company-card-header">
+            <span class="company-card-badge">Powerline</span>
+            <div class="company-icon-wrap">⚡</div>
+          </div>
+          <div class="company-card-body">
+            <h2 class="company-name">Powerline Solutions</h2>
+            <a href="https://www.powerlinesolutions.com/" class="company-url" target="_blank" rel="noopener">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              powerlinesolutions.com
+            </a>
+            <p class="company-desc">A specialist provider of power line solutions and critical electrical infrastructure services. With deep expertise in power systems, Powerline Solutions delivers innovative, high-performance electrical solutions to industry and utility clients worldwide.</p>
+            <div class="company-tags">
+              <span class="company-tag">Power Systems</span>
+              <span class="company-tag">Electrical</span>
+              <span class="company-tag">Infrastructure</span>
+            </div>
+          </div>
+          <div class="company-card-footer">
+            <a href="https://www.powerlinesolutions.com/" class="company-visit-btn" target="_blank" rel="noopener">
+              Visit Powerline Website <span class="btn-arrow">→</span>
+            </a>
+          </div>
+        </div>
+
+      </div><!-- end companies-grid -->
+      </div><!-- end companies-grid-wrapper -->
+    </div>
+  </section>
+
+  <!-- ====== CTA BANNER ====== -->
+  <section class="cta-banner" id="cta">
+    <div class="container">
+      <div class="cta-content animate-on-scroll">
+        <h2>Interested in Partnership?</h2>
+        <p>If you'd like to explore business collaboration with Trevor Technologies WLL or our associated companies, we'd love to hear from you.</p>
+        <div class="cta-buttons">
+          <a href="contact.html" class="btn btn-primary btn-lg" style="background: var(--white); color: var(--trevor-blue);">Contact Us <span class="btn-icon">→</span></a>
+          <a href="tel:+97339341269" class="btn btn-outline-white btn-lg">📞 +973 39341269</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== FOOTER ====== -->
+  <footer class="footer">
+    <div class="footer-main">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <img src="assets/trevor-logo.png" alt="Trevor Technologies">
+            <p>Delivering reliable and advanced power solutions for industrial, commercial, telecom, healthcare, and critical infrastructure sectors since 2014.</p>
+            <div class="footer-social">
+              <a href="#" aria-label="LinkedIn">in</a>
+              <a href="#" aria-label="Twitter">𝕏</a>
+              <a href="#" aria-label="YouTube">▶</a>
+            </div>
+          </div>
+          <div class="footer-col">
+            <h4>Products</h4>
+            <ul>
+              <li><a href="rectifiers.html">Rectifiers &amp; Chargers</a></li>
+              <li><a href="ac-ups.html">AC UPS &amp; Inverters</a></li>
+              <li><a href="batteries.html">Battery Systems</a></li>
+              <li><a href="dc-converters.html">DC-DC Converters</a></li>
+              <li><a href="solar.html">Solar Systems</a></li>
+              <li><a href="containerized.html">Containerized Solutions</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Services</h4>
+            <ul>
+              <li><a href="services.html">Design &amp; Engineering</a></li>
+              <li><a href="services.html">Installation</a></li>
+              <li><a href="services.html">Testing &amp; Commissioning</a></li>
+              <li><a href="services.html">Preventive Maintenance</a></li>
+              <li><a href="services.html">Annual Contracts</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Company</h4>
+            <ul>
+              <li><a href="about.html">About Us</a></li>
+              <li><a href="industries.html">Industries</a></li>
+              <li><a href="associated-companies.html">Associated Companies</a></li>
+              <li><a href="contact.html">Contact</a></li>
+
+            </ul>
+          </div>
+          <div class="footer-newsletter">
+            <h4>Stay Updated</h4>
+            <p>Get the latest updates on power solutions and industry insights.</p>
+            <form class="newsletter-form" onsubmit="event.preventDefault(); this.querySelector('button').textContent='✓';">
+              <input type="email" placeholder="Your email address" required>
+              <button type="submit">→</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <p>© 2024 Trevor Technologies W.L.L. All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Cookie Policy</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll to Top -->
+  <button class="scroll-top" id="scrollTop" aria-label="Scroll to top">↑</button>
+
+  <script src="script.js"></script>
+</body>
+</html>
