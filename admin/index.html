@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Content Manager - Trevor Technologies</title>
+    <link href="config.yml" type="text/yaml" rel="cms-config-url">
     <style>
       /* Customize Decap CMS Login Button & Accents */
       [class*="Button-button-default-zIndex-disabled-lightBlue"] {
@@ -40,9 +41,9 @@
           document.location.href = "/admin/";
         });
         
-        // Automatically close the modal and load dashboard on login
+        // Correctly close the modal on login without reloading the page
         window.netlifyIdentity.on("login", () => {
-          document.location.href = "/admin/";
+          window.netlifyIdentity.close();
         });
       }
     </script>
