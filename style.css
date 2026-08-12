@@ -120,6 +120,7 @@ html {
   scroll-behavior: smooth;
   font-size: 16px;
   -webkit-text-size-adjust: 100%;
+  overflow-x: hidden;
 }
 
 body {
@@ -2150,6 +2151,14 @@ select.form-control {
   .split-section.reverse { direction: ltr; }
   .split-image { min-height: 300px; }
 
+  .specs-table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+
   .carousel-container {
     position: relative;
     margin: 0 calc(-1 * var(--space-6));
@@ -2191,6 +2200,20 @@ select.form-control {
     flex: 0 0 82%;
     scroll-snap-align: center;
     margin-bottom: 0;
+  }
+
+  .split-content .product-features-grid {
+    display: grid !important;
+    overflow: visible;
+    padding: 0;
+  }
+  
+  .split-content .product-features-grid .product-feature-card {
+    flex: auto;
+  }
+  
+  .split-image img {
+    min-height: auto;
   }
 
   .carousel-nav-btn {
