@@ -8,6 +8,7 @@
   <title>Trevor Technologies WLL — Industrial Power Backup & Critical Infrastructure Solutions</title>
   <link rel="stylesheet" href="style.css">
   <link rel="icon" type="image/png" href="assets/trevor-logo.png">
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
 
@@ -512,5 +513,16 @@
   <button class="scroll-top" id="scrollTop" aria-label="Scroll to top">↑</button>
 
   <script src="script.js"></script>
+  <script>
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("init", user => {
+        if (!user) {
+          window.netlifyIdentity.on("login", () => {
+            document.location.href = "/admin/";
+          });
+        }
+      });
+    }
+  </script>
 </body>
 </html>

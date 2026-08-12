@@ -1,0 +1,25 @@
+backend:
+  name: git-gateway
+  branch: main
+local_backend: true
+logo_url: "/assets/trevor-logo.png"
+
+media_folder: "assets/uploads"
+public_folder: "/assets/uploads"
+
+collections:
+  - name: "companies"
+    label: "Associated Companies"
+    files:
+      - file: "data/companies.json"
+        label: "Companies List"
+        name: "companies_list"
+        fields:
+          - name: "companies"
+            label: "Companies"
+            widget: "list"
+            fields:
+              - {label: "Company Name", name: "title", widget: "string"}
+              - {label: "Website URL", name: "url", widget: "string"}
+              - {label: "Display Domain", name: "domain", widget: "string"}
+              - {label: "Icon Emoji", name: "icon", widget: "string", default: "🏢"}

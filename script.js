@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initDropdowns();
   initContactForm();
   initCarousels();
+  loadAssociatedCompanies();
 });
 
 /* ========================================================================
@@ -317,3 +318,49 @@ function initCarousels() {
     });
   });
 }
+
+/* ========================================================================
+   11. ASSOCIATED COMPANIES (DYNAMIC LOAD)
+   ======================================================================== */
+async function loadAssociatedCompanies() {
+  try {
+    // Add cache: 'no-store' to prevent the browser from caching the JSON file
+    const response = await fetch('data/companies.json', { cache: 'no-store' });
+    if (!response.ok) return;
+    const data = await response.json();
+    
+    // Find all "Associated Companies" dropdown menus across the site
+    const dropdownTriggers = document.querySelectorAll('.dropdown-trigger');
+    
+    dropdownTriggers.forEach(trigger => {
+      if (trigger.textContent.includes('Associated Companies')) {
+        const menu = trigger.nextElementSibling;
+        if (menu && menu.classList.contains('dropdown-menu')) {
+          // Clear current hardcoded items
+          menu.innerHTML = '';
+          
+          // Populate from JSON
+          data.companies.forEach(company => {
+            const a = document.createElement('a');
+            a.href = company.url;
+            a.className = 'dropdown-item';
+            a.target = '_blank';
+            a.rel = 'noopener';
+            
+            a.innerHTML = `
+              <div class="dd-icon">${company.icon || '🏢'}</div>
+              <div class="dd-text">
+                <span class="dd-title">${company.title}</span>
+                <span class="dd-desc">${company.domain}</span>
+              </div>
+            `;
+            menu.appendChild(a);
+          });
+        }
+      }
+    });
+  } catch (error) {
+    console.error('Error loading associated companies:', error);
+  }
+}
+
