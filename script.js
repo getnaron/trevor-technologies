@@ -216,52 +216,85 @@ function initDropdowns() {
 }
 
 /* ========================================================================
-   8. CONTACT FORM
+   8. CONTACT FORM — Web3Forms Integration
    ======================================================================== */
 function initContactForm() {
   const form = document.querySelector('#contactForm');
   if (!form) return;
 
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    // Basic validation
+    const btn = form.querySelector('#submitBtn');
+    const successBox = document.getElementById('formSuccess');
+    const errorBox = document.getElementById('formError');
+
+    // Hide previous feedback
+    if (successBox) successBox.style.display = 'none';
+    if (errorBox) errorBox.style.display = 'none';
+
+    // Basic client-side validation
     const required = form.querySelectorAll('[required]');
     let isValid = true;
-
     required.forEach(field => {
       if (!field.value.trim()) {
         isValid = false;
-        field.style.borderColor = 'var(--accent-red)';
-        field.addEventListener('input', () => {
-          field.style.borderColor = '';
-        }, { once: true });
+        field.style.borderColor = '#ef4444';
+        field.addEventListener('input', () => { field.style.borderColor = ''; }, { once: true });
       }
     });
 
-    // Email validation
-    const email = form.querySelector('[type="email"]');
-    if (email && email.value && !isValidEmail(email.value)) {
+    const emailField = form.querySelector('[type="email"]');
+    if (emailField && emailField.value && !isValidEmail(emailField.value)) {
       isValid = false;
-      email.style.borderColor = 'var(--accent-red)';
+      emailField.style.borderColor = '#ef4444';
     }
 
-    if (isValid) {
-      // Show success
-      const btn = form.querySelector('button[type="submit"]');
-      const originalText = btn.innerHTML;
-      btn.innerHTML = '✓ Message Sent Successfully!';
-      btn.style.background = 'var(--accent-green)';
-      btn.disabled = true;
+    if (!isValid) return;
 
-      setTimeout(() => {
-        btn.innerHTML = originalText;
-        btn.style.background = '';
-        btn.disabled = false;
+    // Loading state
+    const originalHTML = btn.innerHTML;
+    btn.innerHTML = '<span style="display:inline-flex;align-items:center;gap:8px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="animation:spin 0.8s linear infinite"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg> Sending…</span>';
+    btn.disabled = true;
+
+    try {
+      const formData = new FormData(form);
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formData
+      });
+      const result = await response.json();
+
+      if (result.success) {
         form.reset();
-      }, 3000);
+        if (successBox) successBox.style.display = 'block';
+        btn.innerHTML = '✓ Inquiry Sent!';
+        btn.style.background = '#059669';
+        setTimeout(() => {
+          btn.innerHTML = originalHTML;
+          btn.style.background = '';
+          btn.disabled = false;
+          if (successBox) successBox.style.display = 'none';
+        }, 5000);
+      } else {
+        throw new Error(result.message || 'Submission failed');
+      }
+    } catch (err) {
+      console.error('Form submission error:', err);
+      if (errorBox) errorBox.style.display = 'block';
+      btn.innerHTML = originalHTML;
+      btn.style.background = '';
+      btn.disabled = false;
     }
   });
+}
+
+// Add CSS spinner keyframes dynamically (only once)
+if (!document.getElementById('spin-keyframes')) {
+  const style = document.createElement('style');
+  style.id = 'spin-keyframes';
+  style.textContent = '@keyframes spin { to { transform: rotate(360deg); } }';
+  document.head.appendChild(style);
 }
 
 function isValidEmail(email) {
@@ -348,7 +381,6 @@ async function loadAssociatedCompanies() {
             a.rel = 'noopener';
             
             a.innerHTML = `
-              <div class="dd-icon">${company.icon || '🏢'}</div>
               <div class="dd-text">
                 <span class="dd-title">${company.title}</span>
                 <span class="dd-desc">${company.domain}</span>

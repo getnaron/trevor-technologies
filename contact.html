@@ -23,42 +23,36 @@
           <a href="products.html" class="nav-link dropdown-trigger">Products <span class="chevron">▼</span></a>
           <div class="dropdown-menu">
             <a href="rectifiers.html" class="dropdown-item">
-              <div class="dd-icon">⚡</div>
               <div class="dd-text">
                 <span class="dd-title">Rectifiers & Chargers</span>
                 <span class="dd-desc">DC UPS Systems</span>
               </div>
             </a>
             <a href="ac-ups.html" class="dropdown-item">
-              <div class="dd-icon">🔌</div>
               <div class="dd-text">
                 <span class="dd-title">AC UPS & Inverters</span>
                 <span class="dd-desc">Uninterruptible Power</span>
               </div>
             </a>
             <a href="batteries.html" class="dropdown-item">
-              <div class="dd-icon">🔋</div>
               <div class="dd-text">
                 <span class="dd-title">Battery Systems</span>
                 <span class="dd-desc">Stationary & Monitoring</span>
               </div>
             </a>
             <a href="dc-converters.html" class="dropdown-item">
-              <div class="dd-icon">🔄</div>
               <div class="dd-text">
                 <span class="dd-title">DC-DC Converters</span>
                 <span class="dd-desc">Power Conversion</span>
               </div>
             </a>
             <a href="solar.html" class="dropdown-item">
-              <div class="dd-icon">☀️</div>
               <div class="dd-text">
                 <span class="dd-title">Solar Systems</span>
                 <span class="dd-desc">Renewable Energy</span>
               </div>
             </a>
             <a href="containerized.html" class="dropdown-item">
-              <div class="dd-icon">📦</div>
               <div class="dd-text">
                 <span class="dd-title">Containerized Solutions</span>
                 <span class="dd-desc">Mobile Power Backup</span>
@@ -73,21 +67,18 @@
           <a href="javascript:void(0);" class="nav-link dropdown-trigger">Associated Companies <span class="chevron">▼</span></a>
           <div class="dropdown-menu">
             <a href="https://ids.com.sa/" class="dropdown-item" target="_blank" rel="noopener">
-              <div class="dd-icon">🏢</div>
               <div class="dd-text">
                 <span class="dd-title">IDS</span>
                 <span class="dd-desc">ids.com.sa</span>
               </div>
             </a>
             <a href="https://winmetua.com/index.html" class="dropdown-item" target="_blank" rel="noopener">
-              <div class="dd-icon">🌐</div>
               <div class="dd-text">
                 <span class="dd-title">Winmet</span>
                 <span class="dd-desc">winmetua.com</span>
               </div>
             </a>
             <a href="https://www.powerlinesolutions.com/" class="dropdown-item" target="_blank" rel="noopener">
-              <div class="dd-icon">⚡</div>
               <div class="dd-text">
                 <span class="dd-title">Powerline Solutions</span>
                 <span class="dd-desc">powerlinesolutions.com</span>
@@ -131,37 +122,47 @@
           <h2 style="font-size: var(--text-2xl); margin-bottom: var(--space-2); color: var(--gray-900);">Request a Quote</h2>
           <p style="color: var(--gray-500); margin-bottom: var(--space-8); font-size: var(--text-sm);">Fill out the form below and our team will get back to you within 24 hours.</p>
 
-          <form id="contactForm">
+          <!-- Web3Forms: replace YOUR_ACCESS_KEY with the key from web3forms.com -->
+          <form id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+
+            <!-- Web3Forms hidden config -->
+            <input type="hidden" name="access_key" value="26f59591-419e-4b96-9e43-10821340e439">
+            <input type="hidden" name="subject" value="New Quote Request — Trevor Technologies">
+            <input type="hidden" name="from_name" value="Trevor Technologies Website">
+            <input type="hidden" name="redirect" value="false">
+            <!-- Honeypot spam trap (invisible to real users) -->
+            <input type="checkbox" name="botcheck" style="display:none;" tabindex="-1" autocomplete="off">
+
             <div class="form-row">
               <div class="form-group">
                 <label for="firstName">First Name <span class="required">*</span></label>
-                <input type="text" id="firstName" class="form-control" placeholder="John" required>
+                <input type="text" id="firstName" name="First Name" class="form-control" placeholder="John" required>
               </div>
               <div class="form-group">
                 <label for="lastName">Last Name <span class="required">*</span></label>
-                <input type="text" id="lastName" class="form-control" placeholder="Smith" required>
+                <input type="text" id="lastName" name="Last Name" class="form-control" placeholder="Smith" required>
               </div>
             </div>
 
             <div class="form-row">
               <div class="form-group">
                 <label for="email">Email Address <span class="required">*</span></label>
-                <input type="email" id="email" class="form-control" placeholder="john@company.com" required>
+                <input type="email" id="email" name="email" class="form-control" placeholder="john@company.com" required>
               </div>
               <div class="form-group">
                 <label for="phone">Phone Number</label>
-                <input type="tel" id="phone" class="form-control" placeholder="+973 XXXX XXXX">
+                <input type="tel" id="phone" name="Phone" class="form-control" placeholder="+973 XXXX XXXX">
               </div>
             </div>
 
             <div class="form-group">
               <label for="company">Company Name <span class="required">*</span></label>
-              <input type="text" id="company" class="form-control" placeholder="Your company name" required>
+              <input type="text" id="company" name="Company" class="form-control" placeholder="Your company name" required>
             </div>
 
             <div class="form-group">
               <label for="productInterest">Product / Service Interest</label>
-              <select id="productInterest" class="form-control">
+              <select id="productInterest" name="Interest" class="form-control">
                 <option value="">Select a category...</option>
                 <option value="rectifiers">Rectifiers & Battery Chargers (DC UPS)</option>
                 <option value="ac-ups">AC UPS & Inverters</option>
@@ -178,10 +179,18 @@
 
             <div class="form-group">
               <label for="message">Project Details <span class="required">*</span></label>
-              <textarea id="message" class="form-control" placeholder="Please describe your requirements, including system voltage, capacity, application environment, and any specific technical needs..." required></textarea>
+              <textarea id="message" name="Message" class="form-control" placeholder="Please describe your requirements, including system voltage, capacity, application environment, and any specific technical needs..." required></textarea>
             </div>
 
-            <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">
+            <!-- Form feedback messages -->
+            <div id="formSuccess" style="display:none; background: #d1fae5; border: 1px solid #6ee7b7; color: #065f46; padding: 16px 20px; border-radius: 12px; margin-bottom: 16px; font-weight: 600;">
+               Your inquiry has been sent! We'll get back to you within 24 hours.
+            </div>
+            <div id="formError" style="display:none; background: #fee2e2; border: 1px solid #fca5a5; color: #991b1b; padding: 16px 20px; border-radius: 12px; margin-bottom: 16px; font-weight: 600;">
+               Something went wrong. Please try again or email us directly at <a href="mailto:info@trevortechnologies.com" style="color: inherit;">info@trevortechnologies.com</a>.
+            </div>
+
+            <button type="submit" id="submitBtn" class="btn btn-primary btn-lg" style="width: 100%;">
               Submit Inquiry <span class="btn-icon">→</span>
             </button>
           </form>
@@ -237,8 +246,8 @@
         <h2>Prefer to Talk Directly?</h2>
         <p>Our engineering experts are available to discuss your power backup requirements and provide tailored recommendations.</p>
         <div class="cta-buttons">
-          <a href="tel:+97339341269" class="btn btn-primary btn-lg" style="background: var(--white); color: var(--trevor-blue);">📞 Call Us Now</a>
-          <a href="mailto:info@trevortechnologies.com" class="btn btn-outline-white btn-lg">✉️ Email Us</a>
+          <a href="tel:+97339341269" class="btn btn-primary btn-lg" style="background: var(--white); color: var(--trevor-blue);"> Call Us Now</a>
+          <a href="mailto:info@trevortechnologies.com" class="btn btn-outline-white btn-lg"> Email Us</a>
         </div>
       </div>
     </div>
@@ -285,16 +294,7 @@
               <li><a href="about.html">About Us</a></li>
               <li><a href="industries.html">Industries</a></li>
               <li><a href="contact.html">Contact</a></li>
-              <li><a href="#">Careers</a></li>
             </ul>
-          </div>
-          <div class="footer-newsletter">
-            <h4>Stay Updated</h4>
-            <p>Get the latest updates on power solutions and industry insights.</p>
-            <form class="newsletter-form" onsubmit="event.preventDefault(); this.querySelector('button').textContent='✓';">
-              <input type="email" placeholder="Your email address" required>
-              <button type="submit">→</button>
-            </form>
           </div>
         </div>
       </div>

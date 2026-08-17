@@ -21,4 +21,3 @@ collections:
               - {label: "Company Name", name: "title", widget: "string"}
               - {label: "Website URL", name: "url", widget: "string"}
               - {label: "Display Domain", name: "domain", widget: "string"}
-              - {label: "Icon Emoji", name: "icon", widget: "string", default: "🏢"}

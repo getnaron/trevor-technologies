@@ -41,9 +41,14 @@
           document.location.href = "/admin/";
         });
         
-        // Correctly close the modal on login without reloading the page
-        window.netlifyIdentity.on("login", () => {
-          window.netlifyIdentity.close();
+        // Listen to init. If the user is NOT logged in initially, register the login handler to reload the page on successful authentication.
+        // If the user IS already logged in, do not register the reload handler to prevent an infinite reload loop.
+        window.netlifyIdentity.on("init", (user) => {
+          if (!user) {
+            window.netlifyIdentity.on("login", () => {
+              document.location.reload();
+            });
+          }
         });
       }
     </script>
