@@ -1,19 +1,9 @@
 {
   "companies": [
     {
-      "title": "IDS",
-      "url": "https://ids.com.sa/",
-      "domain": "ids.com.sa"
-    },
-    {
       "title": "Winmet",
       "url": "https://winmetua.com/index.html",
       "domain": "winmetua.com"
-    },
-    {
-      "title": "Powerline Solutions",
-      "url": "https://www.powerlinesolutions.com/",
-      "domain": "powerlinesolutions.com"
     }
   ]
 }
