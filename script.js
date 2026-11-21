@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initDropdowns();
   initContactForm();
   initCarousels();
+  initImageSliders();
   loadAssociatedCompanies();
 });
 
@@ -394,5 +395,89 @@ async function loadAssociatedCompanies() {
   } catch (error) {
     console.error('Error loading associated companies:', error);
   }
+}
+
+/* ========================================================================
+   12. INTERACTIVE IMAGE SLIDERS (Product Cards & Gallery)
+   ======================================================================== */
+function initImageSliders() {
+  document.querySelectorAll('.card-slider-container, .split-gallery-container').forEach(slider => {
+    const isGallery = slider.classList.contains('split-gallery-container');
+    const slideClass = isGallery ? '.split-gallery-slide' : '.card-slide';
+    const dotClass = isGallery ? '.gallery-dot' : '.card-dot';
+    const slides = slider.querySelectorAll(slideClass);
+    const dots = slider.querySelectorAll(dotClass);
+    const prevBtn = slider.querySelector(isGallery ? '.split-gallery-btn.prev' : '.card-slider-btn.prev');
+    const nextBtn = slider.querySelector(isGallery ? '.split-gallery-btn.next' : '.card-slider-btn.next');
+
+    if (!slides.length) return;
+    let currentIndex = 0;
+
+    function goToSlide(index) {
+      if (index < 0) index = slides.length - 1;
+      if (index >= slides.length) index = 0;
+      currentIndex = index;
+
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === currentIndex);
+      });
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === currentIndex);
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        goToSlide(currentIndex + 1);
+      });
+    }
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        goToSlide(currentIndex - 1);
+      });
+    }
+
+    dots.forEach((dot, i) => {
+      dot.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        goToSlide(i);
+      });
+    });
+
+    // Touch swipe gesture support
+    let startX = 0;
+    let startY = 0;
+    let isSwiping = false;
+
+    slider.addEventListener('touchstart', (e) => {
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+      isSwiping = true;
+    }, { passive: true });
+
+    slider.addEventListener('touchend', (e) => {
+      if (!isSwiping) return;
+      isSwiping = false;
+      const endX = e.changedTouches[0].clientX;
+      const endY = e.changedTouches[0].clientY;
+      const diffX = startX - endX;
+      const diffY = startY - endY;
+
+      // Only trigger if horizontal swipe is significantly greater than vertical scroll
+      if (Math.abs(diffX) > 35 && Math.abs(diffX) > Math.abs(diffY)) {
+        if (diffX > 0) {
+          goToSlide(currentIndex + 1);
+        } else {
+          goToSlide(currentIndex - 1);
+        }
+      }
+    }, { passive: true });
+  });
 }
 
