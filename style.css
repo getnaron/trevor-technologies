@@ -397,7 +397,10 @@ p {
   top: 100%;
   left: 50%;
   transform: translateX(-50%) translateY(8px);
-  min-width: 280px;
+  min-width: 300px;
+  max-height: min(420px, 70vh);
+  overflow-y: auto;
+  overflow-x: hidden;
   background: var(--white);
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-2xl);
@@ -407,6 +410,26 @@ p {
   visibility: hidden;
   transition: all var(--transition-base);
   pointer-events: none;
+  scrollbar-width: thin;
+  scrollbar-color: var(--gray-300) transparent;
+}
+
+.dropdown-menu::-webkit-scrollbar {
+  width: 5px;
+}
+
+.dropdown-menu::-webkit-scrollbar-track {
+  background: transparent;
+  margin: var(--space-2) 0;
+}
+
+.dropdown-menu::-webkit-scrollbar-thumb {
+  background: var(--gray-300);
+  border-radius: var(--radius-full);
+}
+
+.dropdown-menu::-webkit-scrollbar-thumb:hover {
+  background: var(--trevor-blue);
 }
 
 .nav-dropdown:hover .dropdown-menu {
@@ -925,7 +948,23 @@ p {
   overflow: hidden;
   border: 1px solid var(--gray-100);
   transition: all var(--transition-base);
-  group: true;
+}
+
+.product-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--gradient-blue);
+  transform: scaleX(0);
+  transition: transform var(--transition-base);
+  z-index: 2;
+}
+
+.product-card:hover::after {
+  transform: scaleX(1);
 }
 
 .product-card:hover {
@@ -962,6 +1001,7 @@ p {
 }
 
 .product-card-badge {
+  display: none !important;
   position: absolute;
   top: var(--space-4);
   left: var(--space-4);
@@ -2152,6 +2192,8 @@ select.form-control {
     padding: 0 0 0 var(--space-4);
     display: none;
     min-width: 0;
+    max-height: none;
+    overflow: visible;
   }
 
   .nav-dropdown.open .dropdown-menu {
